@@ -12,7 +12,7 @@ namespace OnlineEdu.API.Controllers
     [ApiController]
     public class BannersController(IGenericService<Banner> _bannerService, IMapper _mapper) : ControllerBase
     {
-        [AllowAnonymous]
+       
         [HttpGet]
         public IActionResult Get()
         {

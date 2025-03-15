@@ -40,7 +40,7 @@ namespace OnlineEdu.API.Controllers
         {
             var newValue = _mapper.Map<About>(createAboutDto);
             _aboutService.TCreate(newValue);
-            return Ok("Yeni Hakkımızda Alanı Oluşturuldu");
+            return Ok("Hakkımızda Alanı Oluşturuldu");
         }
 
         [HttpPut]
@@ -48,7 +48,7 @@ namespace OnlineEdu.API.Controllers
         {
             var value = _mapper.Map<About>(updateAboutDto);
             _aboutService.TUpdate(value);
-            return Ok("Hakkımda Alanı Güncellendi");
+            return Ok("Hakkımızda Alanı Güncellendi");
 
         }
     }

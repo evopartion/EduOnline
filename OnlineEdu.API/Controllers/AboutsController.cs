@@ -12,7 +12,7 @@ namespace OnlineEdu.API.Controllers
     [ApiController]
     public class AboutsController(IGenericService<About> _aboutService, IMapper _mapper) : ControllerBase
     {
-        [AllowAnonymous]
+       
         [HttpGet]
         public IActionResult Get()
         {

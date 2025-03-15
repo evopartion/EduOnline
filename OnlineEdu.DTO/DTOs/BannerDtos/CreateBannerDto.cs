@@ -14,4 +14,5 @@ namespace OnlineEdu.DTO.DTOs.BannerDtos
         {
             get; set;
         }
+    }
 }

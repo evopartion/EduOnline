@@ -9,9 +9,9 @@ namespace OnlineEdu.WebUI.Areas.Admin.Controllers
     public class AboutController : Controller
     {
        private readonly HttpClient _client=HttpClientInstance.CreateClient();
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var values = _client.GetFromJsonAsync<List<ResultAboutDto>>("abouts");
+            var values = await _client.GetFromJsonAsync<List<ResultAboutDto>>("abouts");
             return View();
         }
     }

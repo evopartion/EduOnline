@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using OnlineEdu.WebUI.DTOs.BlogDtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,7 @@ namespace OnlineEdu.WebUI.DTOs.BlogCategoryDtos
     {
         public int BlogCategoryId { get; set; }
         public string Name { get; set; }
-        public List<ResultBlogCategoryDto> Blogs { get; set; }
+
+        public List<ResultBlogDto> Blogs { get; set; }
     }
 }

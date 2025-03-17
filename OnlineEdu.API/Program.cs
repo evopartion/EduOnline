@@ -17,6 +17,10 @@ builder.Services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IGenericService<>),typeof(GenericManager<>));
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogService, BlogManager>();
+builder.Services.AddScoped<ICourseCategoryRepository, CourseCategoryRepository>();
+builder.Services.AddScoped<ICourseCategoryService, CourseCategoryManager>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<ICourseService, CourseManager>();
 
 // Add services to the container.
 builder.Services.AddDbContext<OnlineEduContext>(options =>

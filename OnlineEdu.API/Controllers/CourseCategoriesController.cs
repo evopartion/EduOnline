@@ -7,12 +7,14 @@ using OnlineEdu.Entity.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
-    public class CourseCategoriesController(IGenericService<CourseCategory> _courseCategoryServices,IMapper _mapper):ControllerBase
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CourseCategoriesController(ICourseCategoryService _courseCategoryService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public IActionResult Get()
         {
-            var values = _courseCategoryServices.TGetList();
+            var values = _courseCategoryService.TGetList();
             return Ok(values);
         }
 
@@ -20,14 +22,14 @@ namespace OnlineEdu.API.Controllers
 
         public IActionResult GetById(int id)
         {
-            var value = _courseCategoryServices.TGetById(id);
+            var value = _courseCategoryService.TGetById(id);
             return Ok(value);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _courseCategoryServices.TDelete(id);
+            _courseCategoryService.TDelete(id);
             return Ok("Kurs Kategori Alanı Silindi");
         }
 
@@ -35,17 +37,30 @@ namespace OnlineEdu.API.Controllers
         public IActionResult Create(CreateCourseCategoryDto createCourseCategoryDto)
         {
             var newValue = _mapper.Map<CourseCategory>(createCourseCategoryDto);
-            _courseCategoryServices.TCreate(newValue);
-            return Ok("Kurs Kategori Alanı Oluşturuldu");
+            _courseCategoryService.TCreate(newValue);
+            return Ok("Yeni Kurs Kategori Alanı Oluşturuldu");
         }
 
         [HttpPut]
         public IActionResult Update(UpdateCourseCategoryDto updateCourseCategoryDto)
         {
             var value = _mapper.Map<CourseCategory>(updateCourseCategoryDto);
-            _courseCategoryServices.TUpdate(value);
+            _courseCategoryService.TUpdate(value);
             return Ok("Kurs Kategori Alanı Güncellendi");
+        }
 
+        [HttpGet("ShowOnHome/{id}")]
+        public IActionResult ShowOnHome(int id)
+        {
+            _courseCategoryService.TShowOnHome(id);
+            return Ok("Ana Sayfada Gösteriliyor");
+        }
+
+        [HttpGet("DontShowOnHome/{id}")]
+        public IActionResult DontShowOnHome(int id)
+        {
+            _courseCategoryService.TDontShowOnHome(id);
+            return Ok("Ana Sayfada Gösterilmiyor");
         }
     }
 }

@@ -15,6 +15,9 @@ namespace OnlineEdu.Entity.Entities
         public CourseCategory Category { get; set; }
         public decimal Price { get; set; }
         public bool IsShown { get; set; }
+        public int? AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
+        public List<CourseRegister> CourseRegisters { get; set; }
 
     }
 }

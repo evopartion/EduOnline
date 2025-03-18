@@ -1,8 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineEdu.DataAccess.Context;
 using OnlineEdu.Entity.Entities;
+using OnlineEdu.WebUI.Services.UserServices;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<OnlineEduContext>(opt =>

@@ -20,5 +20,6 @@ namespace OnlineEdu.DTO.DTOs.CourseDtos
         {
             get; set;
         }
+        public int AppUserId { get; set; }
     }
 }

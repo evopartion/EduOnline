@@ -1,28 +1,25 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.Entity.Entities;
-using OnlineEdu.WebUI.DTOs.BlogCategoryDtos;
-using OnlineEdu.WebUI.DTOs.BlogDtos;
 using OnlineEdu.WebUI.Helpers;
+using OnlineEdu.WebUI.DTOs.BlogDtos;
+using OnlineEdu.WebUI.DTOs.BlogCategoryDtos;
 
-namespace OnlineEdu.WebUI.Areas.Admin.Controllers
+namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
-
-    public class BlogController : Controller
+    [Area("Teacher")]
+    public class MyBlogController(UserManager<AppUser> _userManager) : Controller
     {
         private readonly HttpClient _client = HttpClientInstance.CreateClient();
-        private readonly UserManager<AppUser> _userManager;
-
-        public BlogController(UserManager<AppUser> userManager)
+        public async Task<IActionResult> Index()
         {
-            _userManager = userManager;
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var values = await _client.GetFromJsonAsync<List<ResultBlogDto>>("blogs/GetBlogByWriterId/" + user.Id);
+            return View(values);
         }
 
-        public async Task CategoryDropdown()
+        public async Task BlogCategoryDropDownAsync()
         {
             var categoryList = await _client.GetFromJsonAsync<List<ResultBlogCategoryDto>>("blogCategories");
 
@@ -35,39 +32,24 @@ namespace OnlineEdu.WebUI.Areas.Admin.Controllers
             ViewBag.categories = categories;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var values = await _client.GetFromJsonAsync<List<ResultBlogDto>>("blogs");
-            return View(values);
-        }
-
-        public async Task<IActionResult> DeleteBlog(int id)
-        {
-            await _client.DeleteAsync("blogs/" + id);
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
         public async Task<IActionResult> CreateBlog()
         {
-            await CategoryDropdown();
+            await BlogCategoryDropDownAsync();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBlog(CreateBlogDto createBlogDto)
         {
-            // giriş yapan kullanıcıyı alma
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             createBlogDto.WriterId = user.Id;
             await _client.PostAsJsonAsync("blogs", createBlogDto);
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
         public async Task<IActionResult> UpdateBlog(int id)
         {
-            await CategoryDropdown();
+            await BlogCategoryDropDownAsync();
             var value = await _client.GetFromJsonAsync<UpdateBlogDto>("blogs/" + id);
             return View(value);
         }
@@ -78,5 +60,12 @@ namespace OnlineEdu.WebUI.Areas.Admin.Controllers
             await _client.PutAsJsonAsync("blogs", updateBlogDto);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> DeleteBlog(int id)
+        {
+            await _client.DeleteAsync("blogs/" + id);
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -10,12 +10,13 @@ namespace OnlineEdu.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogCategoriesController(IGenericService<BlogCategory> _blogCategoryService, IMapper _mapper) : ControllerBase
+    public class BlogCategoriesController(IBlogCategoryService _blogCategoryService, IMapper _mapper) : ControllerBase
     {
+
         [HttpGet]
         public IActionResult Get()
         {
-            var values = _blogCategoryService.TGetList();
+            var values = _blogCategoryService.TGetCategoriesWithBlogs();
             return Ok(values);
         }
 
@@ -39,7 +40,7 @@ namespace OnlineEdu.API.Controllers
         {
             var newValue = _mapper.Map<BlogCategory>(createBlogCategoryDto);
             _blogCategoryService.TCreate(newValue);
-            return Ok("Blog Kategori Alanı Oluşturuldu");
+            return Ok("Yeni Blog Kategori Alanı Oluşturuldu");
         }
 
         [HttpPut]
@@ -47,8 +48,7 @@ namespace OnlineEdu.API.Controllers
         {
             var value = _mapper.Map<BlogCategory>(updateBlogCategoryDto);
             _blogCategoryService.TUpdate(value);
-            return Ok("Blog Kategori Güncellendi");
-
+            return Ok("Blog Kategori Alanı Güncellendi");
         }
     }
 }

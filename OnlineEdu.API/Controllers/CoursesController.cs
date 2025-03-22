@@ -63,12 +63,14 @@ namespace OnlineEdu.API.Controllers
             _courseService.TDontShowOnHome(id);
             return Ok("Ana Sayfada Gösterilmiyor");
         }
+
         [HttpGet("GetActiveCourses")]
         public IActionResult GetActiveCourses()
         {
             var values = _courseService.TGetFilteredList(x => x.IsShown == true);
             return Ok(values);
         }
+
         [HttpGet("GetCoursesByTeacherId/{id}")]
         public IActionResult GetCoursesByTeacherId(int id)
         {
@@ -76,11 +78,19 @@ namespace OnlineEdu.API.Controllers
             var mappedValues = _mapper.Map<List<ResultCourseDto>>(values);
             return Ok(mappedValues);
         }
+
         [HttpGet("GetCourseCount")]
         public IActionResult GetCourseCount()
         {
             var courseCount = _courseService.TCount();
             return Ok(courseCount);
+        }
+
+        [HttpGet("GetCoursesByCategoryId/{id}")]
+        public IActionResult GetCoursesByCategoryId(int id)
+        {
+            var values = _courseService.TGetAllCoursesWithCategories(x => x.CourseCategoryId == id);
+            return Ok(values);
         }
     }
 }

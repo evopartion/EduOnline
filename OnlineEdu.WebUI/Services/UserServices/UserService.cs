@@ -18,7 +18,7 @@ namespace OnlineEdu.WebUI.Services.UserServices
         {
             throw new NotImplementedException();
         }
-
+        //kayıt olan herkese student rolü ver
         public async Task<IdentityResult> CreateUserAsync(UserRegisterDto userRegisterDto)
         {
             var user = new AppUser
@@ -33,7 +33,7 @@ namespace OnlineEdu.WebUI.Services.UserServices
                 return new IdentityResult();
 
             }
-
+            
             var result = await _userManager.CreateAsync(user, userRegisterDto.Password);
             if (result.Succeeded)
             {

@@ -19,7 +19,7 @@ namespace OnlineEdu.WebUI.Controllers
         {
             var courses = await _client.GetFromJsonAsync<List<ResultCourseDto>>("courses/GetCoursesByCategoryId/" + id);
             var category = (from x in courses
-                            select x.Category.Name).FirstOrDefault();
+                            select x.CourseCategory.Name).FirstOrDefault();
             ViewBag.category = category;
             return View(courses);
         }

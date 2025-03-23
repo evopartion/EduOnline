@@ -11,6 +11,7 @@ namespace OnlineEdu.Entity.Entities
         public int CourseVideoId { get; set; }
 
         public int CourseId { get; set; }
+        // virtual lazy loading için
         public virtual Course Course { get; set; }
 
         public int VideoNumber { get; set; }

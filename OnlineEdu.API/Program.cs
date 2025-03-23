@@ -30,6 +30,7 @@ builder.Services.AddScoped<IBlogCategoryService, BlogCategoryManager>();
 builder.Services.AddDbContext<OnlineEduContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
+    options.UseLazyLoadingProxies();
 });
 builder.Services.AddControllers().AddJsonOptions(x =>
    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

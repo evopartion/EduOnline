@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.WebUI.DTOs.UserDtos;
 using OnlineEdu.WebUI.Services.UserServices;
 
@@ -37,6 +38,11 @@ namespace OnlineEdu.WebUI.Controllers
                 ModelState.AddModelError("", "Email veya Şifre Hatalı");
                 return View();
             }
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await _userService.LogoutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

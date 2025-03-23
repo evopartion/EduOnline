@@ -1,81 +1,82 @@
 ﻿﻿
 @model List<ResultCourseDto>
 @{
-    ViewData["Title"] = "Kurslar";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/Layout.cshtml";
 }
 
 
-@{
-    int count = 0;
-}
-<table class="table table-hover">
 
-    <tr>
+<main>
+    <!--? Hero Start -->
+    <div class="slider-area ">
+        <div class="slider-height2 d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap hero-cap2 text-center">
 
-        <th>#</th>
-        <th>Resim</th>
-        <th>Kurs Adı</th>
-        <th>Fiyat</th>
-        <th>Kategori</th>
-        <th>Gösterilme Durumu</th>
+                            <h2>Tüm Kurslar</h2>
 
-        <th></th>
-        <th>Ana Sayfada</th>
-
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        count++;
-        <tr>
-            <th>@count</th>
-            <th><img src="@item.ImageUrl" style="height:75px;width:75px" /></th>
-            <td>@item.CourseName</td>
-            <td>@item.Price ₺</td>
-            <td>@item.CourseCategoryId </td>
-            <td>@(item.IsShown ? "Gösteriliyor" : "Gösterilmiyor") </td>
-            <td>
-                <button onclick="deleteCourse(@item.CourseId)" class="btn btn-outline-danger">Sil</button>
-                <a asp-action="UpdateCourse" asp-controller="Course" asp-area="Admin" asp-route-id="@item.CourseId" class="btn btn-outline-info">Güncelle</a>
-
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+    <!-- all-course Start -->
+    <section class="all-course section-padding30">
+        <div class="container">
+            <div class="row">
+                <div class="all-course-wrapper">
+                    <!-- Heading & Nav Button -->
+                    <!-- Tab content -->
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Nav Card -->
+                            <div class="tab-content" id="nav-tabContent">
+                                <!--  one -->
 
 
-            </td>
-            <td>
-                <a asp-action="ShowOnHome" asp-controller="Course" asp-area="Admin" asp-route-id="@item.CourseId" class="btn btn-outline-success"> Göster</a>
-                <a asp-action="DontShowOnHome" asp-controller="Course" asp-area="Admin" asp-route-id="@item.CourseId" class="btn btn-outline-secondary"> Gösterme</a>
-            </td>
-        </tr>
-    }
-</table>
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="row">
+                                        @foreach (var course in Model)
+                                        {
+                                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                                <!-- Single course -->
+                                                <div class="single-course mb-70">
+                                                    <div class="course-img">
+                                                        <img src="@course.ImageUrl" alt="">
+                                                    </div>
+                                                    <div class="course-caption">
+                                                        <div class="course-cap-top">
+                                                            <h4><a href="#">@course.CourseName</a></h4>
+                                                        </div>
+                                                        <div class="course-cap-mid d-flex justify-content-between">
 
-<br />
-<a asp-action="CreateCourse" asp-controller="Course" asp-area="Admin" class="btn btn-outline-primary">Yeni Kurs Ekle</a>
+                                                            <ul><li>@course.CourseCategory.Name</li></ul>
+                                                        </div>
+                                                        <div class="course-cap-bottom d-flex justify-content-between">
 
-<script>
+                                                            <span>@course.Price ₺</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
 
-    function deleteCourse(id) {
+                                    </div>
+                                </div>
 
 
-
-        Swal.fire({
-            title: "Silmek istediğinize emin misiniz?",
-            text: "Bu işlemi geri alamazsınız!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Evet, Sil!",
-            cancelButtonText: "İptal"
-        }).then((result) => {
-            if (result.isConfirmed) {
-
-                window.location.href = "/Admin/Course/DeleteCourse/" + id;
-
-            }
-        });
-
-    }
-
-</script>
+                            </div>
+                            <!-- End Nav Card -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- all-course End -->
+</main>

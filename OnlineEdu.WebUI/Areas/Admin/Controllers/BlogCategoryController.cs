@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.WebUI.DTOs.BannerDtos;
 using OnlineEdu.WebUI.DTOs.BlogCategoryDtos;
 using OnlineEdu.WebUI.Helpers;
 using OnlineEdu.WebUI.Validators;
@@ -8,10 +9,15 @@ namespace OnlineEdu.WebUI.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Route("[area]/[controller]/[action]/{id?}")]
+
     public class BlogCategoryController : Controller
     {
-        private readonly HttpClient _client = HttpClientInstance.CreateClient();
+        private readonly HttpClient _client;
+
+        public BlogCategoryController(IHttpClientFactory clientFactory)
+        {
+            _client = clientFactory.CreateClient("EduClient");
+        }
         public async Task<IActionResult> Index()
         {
 
@@ -35,16 +41,21 @@ namespace OnlineEdu.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBlogCategory(CreateBlogCategoryDto createBlogCategoryDto)
         {
-            var validator = new BlogCategoryValidator();
-            var result = await validator.ValidateAsync(createBlogCategoryDto);
-            if (!result.IsValid)
+            // var validator = new BlogCategoryValidator();
+            //var result =  await validator.ValidateAsync(createBlogCategoryDto);
+            // if (!result.IsValid)
+            // {
+            //     ModelState.Clear();
+            //     foreach (var x in result.Errors)
+            //     {
+            //         ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
+            //     }
+            //     return View();
+            // }
+
+            if (!ModelState.IsValid)
             {
-                ModelState.Clear();
-                foreach (var x in result.Errors)
-                {
-                    ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
-                }
-                return View();
+                return View(createBlogCategoryDto);
             }
             await _client.PostAsJsonAsync("blogcategories", createBlogCategoryDto);
             return RedirectToAction(nameof(Index));

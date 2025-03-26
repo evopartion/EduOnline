@@ -6,10 +6,15 @@ using OnlineEdu.WebUI.Helpers;
 namespace OnlineEdu.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class TestimonialController : Controller
     {
-        private readonly HttpClient _client = HttpClientInstance.CreateClient();
+        private readonly HttpClient _client;
+
+        public TestimonialController(IHttpClientFactory clientFactory)
+        {
+            _client = clientFactory.CreateClient("EduClient");
+        }
 
         public async Task<IActionResult> Index()
         {

@@ -31,6 +31,26 @@ namespace OnlineEdu.API.Controllers
             return Ok(token);
         }
 
-        
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterDto model)
+        {
+            var user = _mapper.Map<AppUser>(model);
+
+            if (ModelState.IsValid)
+            {
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (!result.Succeeded)
+                {
+                    return BadRequest(result.Errors);
+                }
+                await _userManager.AddToRoleAsync(user, "Student");
+                return Ok("Kullanıcı Kaydı Başarılı");
+            }
+
+
+            return BadRequest();
+        }
+
     }
 }

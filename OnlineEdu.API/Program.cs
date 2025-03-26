@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using OnlineEdu.Business.Abstract;
 using OnlineEdu.Business.Concrete;
 using OnlineEdu.Business.Configurations;
+using OnlineEdu.Business.Validators;
 using OnlineEdu.DataAccess.Abstract;
 using OnlineEdu.DataAccess.Concrete;
 using OnlineEdu.DataAccess.Context;
@@ -43,7 +44,7 @@ builder.Services.AddDbContext<OnlineEduContext>(options =>
     options.UseLazyLoadingProxies();
 });
 
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<OnlineEduContext>();
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<OnlineEduContext>().AddErrorDescriber<CustomErrorDescriber>();
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<JwtTokenOptions>();
 
 builder.Services.AddAuthentication(opt =>

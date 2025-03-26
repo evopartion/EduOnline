@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.Business.Abstract;
@@ -8,10 +9,12 @@ using OnlineEdu.Entity.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class TestimonialsController(IGenericService<Testimonial> _testimonialService, IMapper _mapper) : ControllerBase
     {
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Get()
         {
@@ -31,7 +34,7 @@ namespace OnlineEdu.API.Controllers
         public IActionResult Delete(int id)
         {
             _testimonialService.TDelete(id);
-            return Ok("Referans Alanı Silindi");
+            return Ok("Referans Silindi");
         }
 
         [HttpPost]
@@ -39,7 +42,7 @@ namespace OnlineEdu.API.Controllers
         {
             var newValue = _mapper.Map<Testimonial>(createTestimonialDto);
             _testimonialService.TCreate(newValue);
-            return Ok("Referans Alanı Oluşturuldu");
+            return Ok("Yeni Referans Oluşturuldu");
         }
 
         [HttpPut]
@@ -47,8 +50,9 @@ namespace OnlineEdu.API.Controllers
         {
             var value = _mapper.Map<Testimonial>(updateTestimonialDto);
             _testimonialService.TUpdate(value);
-            return Ok("Referans Alanı Güncellendi");
+            return Ok("Referans Güncellendi");
         }
+        [AllowAnonymous]
         [HttpGet("GetTestimonialCount")]
         public IActionResult GetTestimonialCount()
         {

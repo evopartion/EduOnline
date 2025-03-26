@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.Business.Abstract;
@@ -8,6 +9,7 @@ using OnlineEdu.Entity.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class SubscribersController(IGenericService<Subscriber> _subscriberService, IMapper _mapper) : ControllerBase
@@ -31,15 +33,15 @@ namespace OnlineEdu.API.Controllers
         public IActionResult Delete(int id)
         {
             _subscriberService.TDelete(id);
-            return Ok("Abone Alanı Silindi");
+            return Ok("Abone Silindi");
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Create(CreateSubscriberDto createSubscriberDto)
         {
             var newValue = _mapper.Map<Subscriber>(createSubscriberDto);
             _subscriberService.TCreate(newValue);
-            return Ok("Abone Alanı Oluşturuldu");
+            return Ok("Yeni Abone Oluşturuldu");
         }
 
         [HttpPut]
@@ -47,7 +49,7 @@ namespace OnlineEdu.API.Controllers
         {
             var value = _mapper.Map<Subscriber>(updateSubscriberDto);
             _subscriberService.TUpdate(value);
-            return Ok("Abone Alanı Güncellendi");
+            return Ok("Abone Güncellendi");
         }
     }
 }

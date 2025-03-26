@@ -8,11 +8,12 @@ using OnlineEdu.Entity.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AboutsController(IGenericService<About> _aboutService, IMapper _mapper) : ControllerBase
     {
-       
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Get()
         {
@@ -40,7 +41,7 @@ namespace OnlineEdu.API.Controllers
         {
             var newValue = _mapper.Map<About>(createAboutDto);
             _aboutService.TCreate(newValue);
-            return Ok("Hakkımızda Alanı Oluşturuldu");
+            return Ok("Yeni Hakkımızda Alanı Oluşturuldu");
         }
 
         [HttpPut]
@@ -48,7 +49,7 @@ namespace OnlineEdu.API.Controllers
         {
             var value = _mapper.Map<About>(updateAboutDto);
             _aboutService.TUpdate(value);
-            return Ok("Hakkımızda Alanı Güncellendi");
+            return Ok("Hakkımda Alanı Güncellendi");
 
         }
     }

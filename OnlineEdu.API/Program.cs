@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineEdu.Business.Abstract;
 using OnlineEdu.Business.Concrete;
+using OnlineEdu.Business.Configurations;
 using OnlineEdu.DataAccess.Abstract;
 using OnlineEdu.DataAccess.Concrete;
 using OnlineEdu.DataAccess.Context;
@@ -25,6 +26,8 @@ builder.Services.AddScoped<ICourseRegisterRepository, CourseRegisterRepository>(
 builder.Services.AddScoped<ICourseRegisterService, CourseRegisterManager>();
 builder.Services.AddScoped<IBlogCategoryRepository, BlogCategoryRepository>();
 builder.Services.AddScoped<IBlogCategoryService, BlogCategoryManager>();
+var configuration = builder.Configuration;
+builder.Services.Configure<JwtTokenOptions>(configuration.GetSection("TokenOptions"));
 
 // Add services to the container.
 builder.Services.AddDbContext<OnlineEduContext>(options =>

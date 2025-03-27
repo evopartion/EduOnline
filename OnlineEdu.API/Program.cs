@@ -19,6 +19,7 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<>));
@@ -33,6 +34,9 @@ builder.Services.AddScoped<ICourseRegisterRepository, CourseRegisterRepository>(
 builder.Services.AddScoped<ICourseRegisterService, CourseRegisterManager>();
 builder.Services.AddScoped<IBlogCategoryRepository, BlogCategoryRepository>();
 builder.Services.AddScoped<IBlogCategoryService, BlogCategoryManager>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+
 var configuration = builder.Configuration;
 builder.Services.Configure<JwtTokenOptions>(configuration.GetSection("TokenOptions"));
 builder.Services.AddScoped<IJwtService, JwtServices>();

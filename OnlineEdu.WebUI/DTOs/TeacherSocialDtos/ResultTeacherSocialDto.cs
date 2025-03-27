@@ -1,4 +1,6 @@
-﻿using OnlineEdu.Entity.Entities;
+﻿
+
+using OnlineEdu.WebUI.DTOs.UserDtos;
 
 namespace OnlineEdu.WebUI.DTOs.TeacherSocialDtos
 {
@@ -9,6 +11,6 @@ namespace OnlineEdu.WebUI.DTOs.TeacherSocialDtos
         public string SocialMediaName { get; set; }
         public string Icon { get; set; }
         public int TeacherId { get; set; }
-        public AppUser Teacher { get; set; }
+        public ResultUserDto Teacher { get; set; }
     }
 }

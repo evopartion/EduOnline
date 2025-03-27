@@ -1,6 +1,7 @@
 ﻿
-using OnlineEdu.Entity.Entities;
+
 using OnlineEdu.WebUI.DTOs.BlogCategoryDtos;
+using OnlineEdu.WebUI.DTOs.UserDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace OnlineEdu.WebUI.DTOs.BlogDtos
 
         public ResultBlogCategoryDto BlogCategory { get; set; }
         public int WriterId { get; set; }
-        public AppUser Writer { get; set; }
+        public ResultUserDto Writer { get; set; }
 
     }
 }
